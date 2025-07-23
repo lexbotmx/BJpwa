@@ -1,29 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Keyword Highlighter</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="icons/icon-192x192.png" type="image/png">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/png" href="icons/icon-192x192.png" />
+    <meta name="theme-color" content="#4f46e5" />
 </head>
 <body>
     <div class="container">
         <h1>Keyword Highlighter</h1>
-        <textarea id="keywordInput" placeholder="Enter keywords (comma or newline separated)"></textarea>
-        <button id="highlightButton">Highlight</button>
-        <button id="clearButton">Clear Highlights</button>
-        <div id="highlightCounts" class="hidden"></div>
-        <div class="nav-buttons">
-            <button id="prevHighlightButton" disabled>&laquo;</button>
-            <span id="matchCounter"></span>
-            <button id="nextHighlightButton" disabled>&raquo;</button>
+
+        <!-- URL Input -->
+        <div class="input-group">
+            <input type="text" id="urlInput" placeholder="Enter URL to load (optional)" />
+            <button id="loadUrlButton">Load Page</button>
         </div>
-        <textarea id="contentInput" rows="10" placeholder="Paste or type content here..."></textarea>
-        <div id="contentDisplay"></div>
+
+        <!-- Keywords Input -->
+        <div class="textarea-wrapper">
+            <textarea id="keywordInput" placeholder="Enter keywords (comma or newline separated)"></textarea>
+            <button id="clearInputButton" title="Clear input">&times;</button>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="button-group">
+            <button id="highlightButton">Highlight</button>
+            <button id="clearButton">Clear Highlights</button>
+            <button id="mobileViewButton">Optimize for Mobile</button>
+        </div>
+
+        <!-- Match Counts -->
+        <div id="highlightCounts" class="highlight-counts hidden"></div>
+
+        <!-- Navigation -->
+        <div class="nav-controls">
+            <div class="nav-buttons">
+                <button id="prevHighlightButton" disabled>&laquo;</button>
+                <button id="nextHighlightButton" disabled>&raquo;</button>
+            </div>
+            <span id="matchCounter" class="match-counter"></span>
+        </div>
+
+        <!-- Content Display -->
+        <div id="contentDisplay" class="content-display"></div>
+
+        <!-- Install Prompt -->
+        <button id="installButton" class="install-btn hidden">
+            Install This App
+        </button>
     </div>
 
-    <script src="app.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
