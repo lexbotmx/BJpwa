@@ -4,8 +4,8 @@
   "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",
-  "description": "Highlights keywords in any text.",
-  "theme_color": "#007bff",
+  "theme_color": "#4f46e5",
+  "description": "Highlights keywords in any text or webpage.",
   "icons": [
     {
       "src": "icons/icon-192x192.png",
