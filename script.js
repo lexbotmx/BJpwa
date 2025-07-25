@@ -143,24 +143,25 @@ async function loadPageFromUrl() {
     const url = urlInput.value.trim();
     if (!url) return;
 
-    // ✅ Use corsproxy.io
-    const proxyUrl = `https://api.corsproxy.io/?${encodeURIComponent(url)}`;
+    const lambdaUrl = 'https://2uxqphgd19.execute-api.us-west-1.amazonaws.com/default/webpage-proxy-BJ';
 
     try {
-        const response = await fetch(proxyUrl);
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
+        const response = await fetch(lambdaUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url })
+        });
+
+        const data = await response.json();
+
+        if (data.content) {
+            contentDisplay.innerHTML = data.content;
+            highlightKeywords(); // Optional: auto-highlight if keywords exist
+        } else {
+            contentDisplay.innerHTML = `<p style="color:red;">${data.error || 'No content loaded.'}</p>`;
         }
-        const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-
-        // Optional: Remove scripts for security
-        doc.querySelectorAll('script').forEach(s => s.remove());
-
-        contentDisplay.innerHTML = doc.body.innerHTML || '<p>No content found.</p>';
     } catch (err) {
-        contentDisplay.innerHTML = `<p style="color:red;">Failed to load page: ${err.message}</p>`;
+        contentDisplay.innerHTML = `<p style="color:red;">Error: ${err.message}</p>`;
     }
 }
 
