@@ -143,19 +143,24 @@ async function loadPageFromUrl() {
     const url = urlInput.value.trim();
     if (!url) return;
 
+    // ✅ Use corsproxy.io
+    const proxyUrl = `https://api.corsproxy.io/?${encodeURIComponent(url)}`;
+
     try {
-        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
         const response = await fetch(proxyUrl);
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
         const html = await response.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
 
-        // Clean up: remove scripts
+        // Optional: Remove scripts for security
         doc.querySelectorAll('script').forEach(s => s.remove());
 
-        contentDisplay.innerHTML = doc.body.innerHTML || '<p>Could not load content.</p>';
+        contentDisplay.innerHTML = doc.body.innerHTML || '<p>No content found.</p>';
     } catch (err) {
-        contentDisplay.innerHTML = `<p style="color:red;">Error loading page: ${err.message}</p>`;
+        contentDisplay.innerHTML = `<p style="color:red;">Failed to load page: ${err.message}</p>`;
     }
 }
 
