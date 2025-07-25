@@ -143,6 +143,7 @@ async function loadPageFromUrl() {
     const url = urlInput.value.trim();
     if (!url) return;
 
+    // Replace with your actual API Gateway URL
     const lambdaUrl = 'https://2uxqphgd19.execute-api.us-west-1.amazonaws.com/default/webpage-proxy-BJ';
 
     try {
@@ -152,16 +153,21 @@ async function loadPageFromUrl() {
             body: JSON.stringify({ url })
         });
 
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
         const data = await response.json();
 
         if (data.content) {
             contentDisplay.innerHTML = data.content;
-            highlightKeywords(); // Optional: auto-highlight if keywords exist
+            highlightKeywords(); // Optional: auto-highlight
         } else {
             contentDisplay.innerHTML = `<p style="color:red;">${data.error || 'No content loaded.'}</p>`;
         }
     } catch (err) {
         contentDisplay.innerHTML = `<p style="color:red;">Error: ${err.message}</p>`;
+        console.error('Fetch error:', err);
     }
 }
 
